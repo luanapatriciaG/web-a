@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Experiment 3: Visualization: Create an interactive Line and Bar chart dashboard using Chart.js to display dataset statistics.">
+    <title>Experiment 3 - Chart.js Interactive Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="lab-tag">IWD EXPERIMENT 03</span>
+                <h1>Interactive Visualization Dashboard</h1>
+            </div>
+            <a href="../../index.html" class="back-link">- Portfolio Home</a>
+        </div>
+    </header>
+    <main class="main-container">
+        <!-- Lab Objectives Banner -->
+        <section class="experiment-info">
+            <div class="info-meta">
+                <span class="badge">CHART.JS VISUALIZATION</span>
+                <span class="badge badge-accent">LINE & BAR DYNAMICS</span>
+                <span class="badge">RESPONSIVE DASHBOARD</span>
+            </div>
+            <p class="aim-text">
+                <strong>Aim:</strong> To create an interactive, responsive analytics dashboard using Chart.js for displaying dataset statistics through synchronized Line and Bar charts with dynamic real-time data binding.
+            </p>
+        </section>
+        <!-- Top Metric Summary KPI Cards -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <span class="kpi-label" id="kpiLabel1">Total Primary Metric</span>
+                <span class="kpi-value" id="kpiVal1">1,070 $K</span>
+                <span class="kpi-sub" id="kpiSub1">14.8% vs last cycle</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label" id="kpiLabel2">Total Secondary Metric</span>
+                <span class="kpi-value" id="kpiVal2">433 units</span>
+                <span class="kpi-sub" id="kpiSub2">Average 72.2 / period</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label" id="kpiLabel3">Peak Period</span>
+                <span class="kpi-value" id="kpiVal3">Jun (240 $K)</span>
+                <span class="kpi-sub" id="kpiSub3">Highest recorded output</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label" id="kpiLabel4">Efficiency Index</span>
+                <span class="kpi-value" id="kpiVal4">94.2%</span>
+                <span class="kpi-sub" id="kpiSub4">Optimal convergence</span>
+            </div>
+        </section>
+        <!-- Dataset Switcher Toolbar -->
+        <section class="dashboard-toolbar">
+            <div class="toolbar-left">
+                <label for="datasetSelect">Active Dataset:</label>
+                <select id="datasetSelect">
+                    <option value="sales_orders">Monthly Performance (Sales vs. Orders Dataset)</option>
+                    <option value="ai_metrics">AI Model Training Dynamics (Epochs & Accuracy/Loss)</option>
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <button type="button" class="btn btn-tool" id="btnToggleAnim">Toggle Smooth Animation</button>
+                <button type="button" class="btn btn-tool" id="btnResetData">Reset Dataset</button>
+            </div>
+        </section>
+        <!-- Charts Container Grid -->
+        <div class="charts-grid">
+            <!-- Chart 1: Line Chart -->
+            <section class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h2 id="lineChartTitle">Temporal Trend Analysis</h2>
+                        <p class="chart-desc" id="lineChartDesc">Interactive Line chart displaying longitudinal performance metrics over time.</p>
+                    </div>
+                    <span class="chart-tag">LINE CHART</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="lineChartCanvas"></canvas>
+                </div>
+            </section>
+            <!-- Chart 2: Bar Chart -->
+            <section class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h2 id="barChartTitle">Categorical Distribution</h2>
+                        <p class="chart-desc" id="barChartDesc">Interactive Bar chart comparing performance across distinct operational categories.</p>
+                    </div>
+                    <span class="chart-tag">BAR CHART</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="barChartCanvas"></canvas>
+                </div>
+            </section>
+        </div>
+        <!-- Real-Time Data Insertion Console -->
+        <section class="data-entry-card">
+            <div class="entry-header">
+                <h3>03 / Dynamic Live Data Entry</h3>
+                <p>Append new data points in real time to immediately re-render and recalculate both Chart.js instances without page refresh.</p>
+            </div>
+            <form id="dataForm" class="entry-form" onsubmit="event.preventDefault();">
+                <div class="form-field">
+                    <label for="inputLabel" id="lblInputLabel">Period / Label</label>
+                    <input type="text" id="inputLabel" placeholder="e.g., Jul" required>
+                </div>
+                <div class="form-field">
+                    <label for="inputValue1" id="lblInputValue1">Primary Value (Sales)</label>
+                    <input type="number" id="inputValue1" placeholder="e.g., 260" required>
+                </div>
+                <div class="form-field">
+                    <label for="inputValue2" id="lblInputValue2">Secondary Value (Orders)</label>
+                    <input type="number" id="inputValue2" placeholder="e.g., 105" required>
+                </div>
+                <button type="button" class="btn btn-add" id="btnAddPoint">+ Append Data Point</button>
+            </form>
+        </section>
+    </main>
+    <div class="toast" id="toast">Data point added to dashboard!</div>
+    <footer class="app-footer">
+        <div class="footer-container">
+            <span>Marwadi University IWD Practical 03</span>
+            <span>Interactive Visualization / Chart.js / Dynamic Dashboard</span>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
