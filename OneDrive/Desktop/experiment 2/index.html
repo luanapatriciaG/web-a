@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Experiment 2: Build a responsive UI that dynamically updates text based on user input using JavaScript.">
+    <title>Experiment 2 - Dynamic Text & DOM Manipulation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="lab-tag">IWD EXPERIMENT 02</span>
+                <h1>Dynamic Text & DOM Interaction</h1>
+            </div>
+            <a href="../../index.html" class="back-link">- Portfolio Home</a>
+        </div>
+    </header>
+    <main class="main-container">
+        <section class="experiment-info">
+            <div class="info-meta">
+                <span class="badge">DOM MANIPULATION</span>
+                <span class="badge badge-accent">EVENT HANDLING</span>
+                <span class="badge">RESPONSIVE DESIGN</span>
+            </div>
+            <p class="aim-text">
+                <strong>Aim:</strong> To build a responsive web interface that dynamically updates text, performs real-time validation, and calculates live analytics based on user input using JavaScript DOM manipulation.
+            </p>
+        </section>
+        <div class="workspace-grid">
+            <!-- Left Column: Input Form & Controls-->
+            <section class="card input-card">
+                <div class="card-header">
+                    <h2>01 / Input Console</h2>
+                    <span class="status-pill status-idle" id="inputStatus">Awaiting input</span>
+                </div>
+                <form id="textForm" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="headlineInput">Headline / Title <span class="req">*</span></label>
+                        <input type="text" id="headlineInput" placeholder="e.g., Autonomous Constellation Manager" maxlength="60" autocomplete="off">
+                        <div class="field-feedback" id="headlineFeedback"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="categorySelect">Domain / Category</label>
+                        <select id="categorySelect">
+                            <option value="AI & Machine Learning">AI & Machine Learning</option>
+                            <option value="Computer Vision">Computer Vision</option>
+                            <option value="Orbital Mechanics">Orbital Mechanics</option>
+                            <option value="Cybersecurity">Cybersecurity</option>
+                            <option value="Fintech & Systems">Fintech & Systems</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="mainTextInput">Dynamic Message / Prompt <span class="req">*</span></label>
+                            <span class="char-count-pill" id="charMeter">0 / 280 chars</span>
+                        </div>
+                        <textarea id="mainTextInput" rows="5" placeholder="Type your text, system prompt, or message here in real-time..." maxlength="280"></textarea>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" id="charProgress"></div>
+                        </div>
+                        <div class="field-feedback" id="mainFeedback"></div>
+                    </div>
+                    <!-- Quick Preset Chips -->
+                    <div class="preset-section">
+                        <label>Quick Presets: </label>
+                        <div class="preset-chips">
+                            <button type="button" class="chip" data-headline="Satellite Trajectory Prediction" data-category="Orbital Mechanics" data-text="Evaluating RK4 orbital propagation with J2 harmonic perturbations for autonomous satellite collision avoidance in Low Earth Orbit.">Satellite RK4</button>
+                            <button type="button" class="chip" data-headline="Grad-CAM Explainability Engine" data-category="Computer Vision" data-text="Visualizing high-order convolutional activations to localize leaf disease lesions with 96.4% classification confidence.">Grad-CAM CNN</button>
+                            <button type="button" class="chip" data-headline="Bytecode Security Analysis" data-category="Cybersecurity" data-text="Scanning Android APK manifest permissions and executing static bytecode analysis for malware detection.">Malware Scanner</button>
+                        </div>
+                    </div>
+                    <!-- Action Toolbar -->
+                    <div class="actions-toolbar">
+                        <button type="button" class="btn btn-tool" id="btnUpper">UPPERCASE</button>
+                        <button type="button" class="btn btn-tool" id="btnLower">lowercase</button>
+                        <button type="button" class="btn btn-tool" id="btnTitle">Title Case</button>
+                        <button type="button" class="btn btn-tool" id="btnReverse">Reverse</button>
+                        <button type="button" class="btn btn-tool" id="btnClear">Clear All</button>
+                    </div>
+                </form>
+            </section>
+            <!-- Right Column: Live Dynamic DOM Render & Analytics -->
+            <section class="card preview-card">
+                <div class="card-header">
+                    <h2>02 / Live Dynamic DOM Output</h2>
+                    <div class="preview-actions">
+                        <button type="button" class="btn btn-copy" id="btnCopy">Copy Text</button>
+                    </div>
+                </div>
+                <!-- Dynamic Live Card Display -->
+                <div class="live-display-box" id="liveDisplayBox">
+                    <div class="preview-meta">
+                        <span class="preview-tag" id="previewCategory">AI & Machine Learning</span>
+                        <span class="preview-time" id="previewTimestamp">Ready</span>
+                    </div>
+                    <h3 class="preview-headline" id="previewHeadline">Your Dynamic Headline Will Appear Here</h3>
+                    <p class="preview-body" id="previewBody">Type into the input console on the left to observe real-time Document Object Model (DOM) node updates without reloading the webpage.</p>
+                    <div class="preview-footer">
+                        <span class="intent-badge" id="previewIntent">Tone: Neutral</span>
+                        <span class="status-indicator live-dot"> DOM SYNC ACTIVE</span>
+                    </div>
+                </div>
+                <!-- Live Real-Time Analytics Grid -->
+                <div class="analytics-grid">
+                    <div class="metric-box">
+                        <span class="metric-label">Characters</span>
+                        <span class="metric-val" id="valChars">0</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Words</span>
+                        <span class="metric-val" id="valWords">0</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Reading Time</span>
+                        <span class="metric-val" id="valReadTime">0s</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Sentences</span>
+                        <span class="metric-val" id="valSentences">0</span>
+                    </div>
+                </div>
+                <!-- Live Validation Alert Box -->
+                <div class="validation-alert alert-info" id="validationAlert">
+                    <span class="alert-icon">i</span>
+                    <span class="alert-text" id="alertMessage">Enter text in the console to observe dynamic DOM updates and instant feedback.</span>
+                </div>
+            </section>
+        </div>
+    </main>
+    <div class="toast" id="toast">Copied to clipboard!</div>
+    <footer class="app-footer">
+        <div class="footer-container">
+            <span>Luana Goncalves Marwadi University IWD Practical 02</span>
+            <span>Responsive UI / Event Handling / DOM Manipulation</span>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
